@@ -28,7 +28,6 @@ class SpiderController extends Controller
 				'msg' => '获取验证码图片成功！',
 				'data' => [
 					'img' => $img_b64,
-					'session'=>\Cache::get(md5($request->input('openid')))
 				]
 			];
 		} else {
@@ -38,5 +37,6 @@ class SpiderController extends Controller
 			];
 		}
 	}
+	
 	
 }
