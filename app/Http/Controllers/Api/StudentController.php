@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Student;
+use App\Spider\InformationPortal;
 use App\Spider\SpiderCore;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -39,7 +40,7 @@ class StudentController extends Controller
 				$stu = Student::getStudentObj($request->input('openid'), $request->input('stuid'), $request->input('password'));    // 获取stu实例
 				$stu_info = $stu->getStuInfo;   // 获取stu_info实例
 				$info = $spider->getStuInfo();  // 抓取stu_info
-				$schedule_parsed= $spider->getSchedule();    // 抓取课表html
+				$schedule_parsed = $spider->getSchedule();    // 抓取课表html
 				$stu_info->schedule_parsed = json_encode($schedule_parsed);  // 存储课表html
 				$stu_info->fill($info); // 存储stu_info
 				$stu_info->save();  // 执行存储
@@ -71,7 +72,11 @@ class StudentController extends Controller
 		}
 		$stu = Student::where('stuid', $data['stuid'])->first();
 		$info = $stu->getStuInfo;
-		$info->schedule_parsed=json_decode($info->schedule_parsed,true);
+		$info_portal = new InformationPortal($stu->stuid, $info->id_number);
+		$current_week = $info_portal->getCurrentWeekNum();  // 获取当前周
+		$info->schedule_parsed = json_decode($info->schedule_parsed, true);    // 解析json课程表
+		$info = $info->toArray();
+		$info['current_week'] = $current_week;
 		return [
 			'status' => 'success',
 			'msg' => '请求成功',
