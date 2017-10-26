@@ -136,14 +136,6 @@ class SpiderCore
    */
   public function getSchedule()
   {
-    $response = $this->client->get($this->urls['ben_xue_qi_ke_biao']);
-    $body = mb_convert_encoding((string)$response->getBody(), 'utf-8', 'gbk');
-    $dom = new Dom();
-    $dom->loadStr($body, ['enforceEncoding' => false]);
-    $tables = $dom->find('table');
-    $table = $tables[4]->find('table')[0];
-    $thead = $table->find('thead')[0];
-    $thead->delete();
     /**
      * 周数字符串处理成数组
      * etc..3-4周=>[3,4]
@@ -204,28 +196,37 @@ class SpiderCore
       return $current_result;
     }
     
+    $response = $this->client->get($this->urls['ben_xue_qi_ke_biao']);
+    $body = mb_convert_encoding((string)$response->getBody(), 'utf-8', 'gbk');
+    $dom = HtmlDomParser::str_get_html($body);
+    $tables = $dom->find('table');
+    $table = $tables[7];
+    $thead = $table->find('thead')[0];
     // 表头数量
     $count = count($thead->find('th'));
     $idx = -1;    // 课程索引
     $main_info = [];  // 某个课程的主要信息缓存
     $result = []; // 整理结果
-    foreach ($table->find('tr') as $tr) {
+    $trs = $table->find('tr');
+    for ($i = 1; $i < count($trs); $i++) {
+//    foreach ($table->find('tr') as $tr) {
+      $tr = $trs[$i];
       $tds = $tr->find('td');
       if (count($tds) == $count) {   // 主课程条目
         $idx++;
         $main_info = [
-          '课程名' => trimWhite($tds[2]->text),
-          '教师' => trimWhite($tds[7]->text)
+          '课程名' => trimWhite($tds[2]->text()),
+          '教师' => trimWhite($tds[7]->text())
         ];
-        $weeks = solveWeek($tds[11]->text);
-        $day = intval(trimWhite($tds[12]->text));
-        $section = solveSection($tds[13]->text);
-        $main_info['教学楼'] = trimWhite($tds[16]->text . $tds[17]->text);
+        $weeks = solveWeek($tds[11]->text());
+        $day = intval(trimWhite($tds[12]->text()));
+        $section = solveSection($tds[13]->text());
+        $main_info['教学楼'] = trimWhite($tds[16]->text() . $tds[17]->text());
       } else {  // 附加课程条目
-        $weeks = solveWeek($tds[0]->text);
-        $day = intval(trimWhite($tds[1]->text));
-        $section = solveSection($tds[2]->text);
-        $main_info['教学楼'] = trimWhite($tds[5]->text . $tds[6]->text);
+        $weeks = solveWeek($tds[0]->text());
+        $day = intval(trimWhite($tds[1]->text()));
+        $section = solveSection($tds[2]->text());
+        $main_info['教学楼'] = trimWhite($tds[5]->text() . $tds[6]->text());
       }
       $result = genSchedule($result, $weeks, $day, $section, $main_info);
     }
@@ -271,7 +272,7 @@ class SpiderCore
         '成绩' => trimWhite($tds[9]->text()),
         '名次' => trimWhite($tds[10]->text()),
       ];
-      $result[]=$one;
+      $result[] = $one;
     }
     return $result;
   }
