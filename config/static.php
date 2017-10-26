@@ -1,4 +1,6 @@
 <?php
 return [
-	'admin' => '/admin-assets'
+  'admin' => '/admin-assets',
+  'libs' => '/libs',
+  'my'=>'/my-assets'
 ];

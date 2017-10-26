@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Spider\InformationPortal;
-use App\Spider\SpiderCore;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Student;
 
 class IndexController extends Controller
 {
-	public function index()
-	{
-	
-	}
+  public function index()
+  {
+    $user_count = Student::count();
+    return view('admin.index.index', compact('user_count'));
+  }
 }

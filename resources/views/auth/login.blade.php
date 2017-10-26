@@ -15,7 +15,7 @@
 									Log In...
 								</div>
 							</div>
-							<form action="{{ route('login') }}" method="post" id="login-form">
+							<form action="{{ route('admin.login') }}" method="post" id="login-form">
 								<div class="control">
 									<input type="text" name="email" class="form-control" placeholder="请输入账户" />
 								</div>

@@ -2,25 +2,26 @@
 <html>
 
 <head>
-	<title>Flat Admin V.2 - Free Bootstrap Admin Templates</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!-- Fonts -->
-	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
-	<!-- CSS Libs -->
-	<link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/lib/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/lib/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/lib/css/animate.min.css">
-	<link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/lib/css/bootstrap-switch.min.css">
-	<link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/lib/css/checkbox3.min.css">
-	<link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/lib/css/jquery.dataTables.min.css">
-	<link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/lib/css/dataTables.bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/lib/css/select2.min.css">
-	<!-- CSS App -->
-	<link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/css/style.css">
-	<link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/css/themes/flat-blue.css">
-	{{--自定义插入点--}}
-	@yield('head')
+  <title>Flat Admin V.2 - Free Bootstrap Admin Templates</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:300,400' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'>
+  <!-- CSS Libs -->
+  <link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/lib/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/lib/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/lib/css/animate.min.css">
+  <link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/lib/css/bootstrap-switch.min.css">
+  <link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/lib/css/checkbox3.min.css">
+  <link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/lib/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/lib/css/dataTables.bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/lib/css/select2.min.css">
+  <!-- CSS App -->
+  <link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/css/style.css">
+  <link rel="stylesheet" type="text/css" href="{{config('static.admin')}}/css/themes/flat-blue.css">
+  {{--自定义插入点--}}
+  <link rel="stylesheet" type="text/css" href="{{config('static.libs')}}/layui/css/layui.css">
+  @yield('head')
 </head>
 
 <body class="flat-blue login-page">
@@ -40,6 +41,15 @@
 <!-- Javascript -->
 <script type="text/javascript" src="{{config('static.admin')}}/js/app.js"></script>
 {{--自定义插入点--}}
+<script type="text/javascript" src="{{config('static.libs')}}/layui/layui.js"></script>
+<script type="text/javascript" src="{{config('static.libs')}}/jquery-form/jquery.form.min.js"></script>
+<script type="text/javascript" src="{{config('static.my')}}/js/public.js"></script>
+<script>
+	layui.use(['layer', 'table'], function () {
+		var layer = layui.layer;
+		var lay_table = layui.table;
+	});
+</script>
 @yield('foot')
 </body>
 
