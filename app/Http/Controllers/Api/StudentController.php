@@ -43,6 +43,8 @@ class StudentController extends Controller
         $info = $spider->getStuInfo();  // 抓取stu_info
         $schedule_parsed = $spider->getSchedule();    // 抓取课表html
         $stu_info->schedule_parsed = json_encode($schedule_parsed);  // 存储课表html
+        $score_parsed = $spider->getScore();
+        $stu_info->score_parsed = json_encode($score_parsed);  // 存储成绩html
         $stu_info->fill($info); // 存储stu_info
         $stu_info->save();  // 执行存储
         return [
@@ -75,6 +77,7 @@ class StudentController extends Controller
     $info = $stu->getStuInfo;
     $current_week = Setting::getCurrentWeek();  // 获取当前周
     $info->schedule_parsed = json_decode($info->schedule_parsed, true);    // 解析json课程表
+    $info->score_parsed = json_decode($info->score_parsed, true);    // 解析json课程表
     $info = $info->toArray();
     $info['current_week'] = $current_week;
     return [

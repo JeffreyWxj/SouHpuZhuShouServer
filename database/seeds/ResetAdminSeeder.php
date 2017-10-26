@@ -15,11 +15,14 @@ class ResetAdminSeeder extends Seeder
 		echo "开始重置Admin密码\n";
 		$user = User::where('name', 'admin')->first();
 		if (!$user) {
-			$user = new User();
-			$user->name = 'admin';
-			$user->email = 'admin@admin.com';
-		}
-		$user->password = bcrypt('11223344');
+			$user=User::create([
+        'name' => 'admin',
+        'email' => 'admin@admin.com',
+        'password' => bcrypt('11223344'),
+      ]);
+		}else{
+		  $user->password = bcrypt('11223344');
+    }
 		$user->save();
 		echo "用户名:admin\n";
 		echo "密码:11223344\n";
